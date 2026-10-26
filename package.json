@@ -1,0 +1,47 @@
+{
+  "name": "bookleaf",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
+    "db:seed-extra": "node prisma/add-extra-tickets.mjs",
+    "db:studio": "prisma studio",
+    "setup": "prisma generate && prisma db push && prisma db seed"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.0",
+    "@radix-ui/react-slot": "^1.5.0",
+    "bcryptjs": "^3.0.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "jose": "^6.2.13",
+    "lucide-react": "^1.61.0",
+    "next": "16.4.3",
+    "openai": "^7.43.0",
+    "prisma": "6.19.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "sonner": "^2.0.8",
+    "tailwind-merge": "^3.7.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "packageManager": "pnpm@11.25.0"
+}

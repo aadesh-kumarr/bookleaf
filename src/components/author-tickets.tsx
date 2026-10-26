@@ -1,0 +1,15 @@
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Plus, Search } from "lucide-react";
+import { Badge, EmptyState } from "@/components/ui";
+import { formatDate } from "@/lib/constants";
+import { appConfig } from "@/config/app";
+
+type Ticket = { id:string; reference:string; subject:string; description:string; status:string; priority:string; category:string; updatedAt:string; book?:{title:string}|null; messages:unknown[] };
+export function AuthorTickets() {
+  const [tickets,setTickets]=useState<Ticket[]>([]); const [query,setQuery]=useState(""); const [loading,setLoading]=useState(true);
+  useEffect(()=>{let active=true;async function load(){const r=await fetch("/api/tickets",{cache:"no-store"});if(r.ok&&active){const b=await r.json();setTickets(b.tickets);setLoading(false)}}load();const timer=setInterval(load,appConfig.realtime.intervalMs);return()=>{active=false;clearInterval(timer)}},[]);
+  const visible=tickets.filter(t=>`${t.subject} ${t.reference} ${t.book?.title??""}`.toLowerCase().includes(query.toLowerCase()));
+  return <><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><p className="text-sm font-semibold text-[#e04d61]">Support history</p><h1 className="mt-2 text-3xl font-semibold tracking-[-.04em] sm:text-4xl">My tickets</h1><p className="mt-3 text-[#746f75]">This list checks for team responses every five seconds.</p></div><Link href="/author/tickets/new" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#f15d6f] px-5 py-3 font-semibold text-white"><Plus size={18}/>Raise a query</Link></div><div className="mt-8 rounded-2xl border border-[#eadfdf] bg-white p-4 shadow-[0_12px_40px_rgba(63,32,38,.04)] sm:p-6"><label className="flex max-w-md items-center gap-3 rounded-xl border border-[#e5d9da] px-4 py-3"><Search size={18} className="text-[#9b9297]"/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search tickets" className="w-full bg-transparent text-sm outline-none"/></label><div className="mt-5 space-y-3">{loading?<p className="py-10 text-center text-sm text-[#817b80]">Loading tickets…</p>:visible.length?visible.map(t=><Link key={t.id} href={`/author/tickets/${t.id}`} className="grid gap-4 rounded-xl border border-[#eee5e5] p-4 transition hover:border-[#f2a7b0] hover:bg-[#fffaf8] sm:grid-cols-[1fr_auto] sm:items-center"><div className="min-w-0"><div className="flex flex-wrap items-center gap-2"><p className="font-semibold">{t.subject}</p><Badge value={t.status}/><Badge value={t.priority}/></div><p className="mt-2 line-clamp-1 text-sm text-[#746f75]">{t.description}</p><p className="mt-2 text-xs text-[#8a8388]">{t.reference} · {t.book?.title??"General / Account level"}</p></div><div className="text-left sm:text-right"><p className="text-xs text-[#8a8388]">Updated {formatDate(t.updatedAt)}</p><p className="mt-1 text-xs font-semibold text-[#d9465a]">{t.messages.length} responses</p></div></Link>):<EmptyState title="No matching tickets" text="Try another search, or raise a new query for the Author Care team."/>}</div></div></>;
+}

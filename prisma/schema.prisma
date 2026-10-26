@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  AUTHOR
+  ADMIN
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketCategory {
+  ROYALTY_PAYMENTS
+  ISBN_METADATA
+  PRINTING_QUALITY
+  DISTRIBUTION_AVAILABILITY
+  BOOK_STATUS_PRODUCTION
+  GENERAL_INQUIRY
+}
+
+enum TicketPriority {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+model User {
+  id              String    @id @default(cuid())
+  authorCode      String?   @unique
+  name            String
+  email           String    @unique
+  passwordHash    String
+  role            Role      @default(AUTHOR)
+  phone           String?
+  city            String?
+  joinedDate      DateTime?
+  books           Book[]
+  tickets         Ticket[]  @relation("TicketAuthor")
+  assignedTickets Ticket[]  @relation("TicketAssignee")
+  messages        Message[]
+  loginAudits     LoginAudit[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model LoginAudit {
+  id             String   @id @default(cuid())
+  attemptedEmail String
+  success        Boolean
+  reason         String?
+  role           Role?
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt      DateTime @default(now())
+
+  @@index([attemptedEmail])
+  @@index([success, createdAt])
+  @@index([userId])
+}
+
+model Book {
+  id                    String   @id
+  authorId              String
+  author                User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  title                 String
+  isbn                  String   @unique
+  genre                 String
+  publicationDate       DateTime?
+  status                String
+  mrp                   Float?
+  authorRoyaltyPerCopy  Float?
+  totalCopiesSold       Int      @default(0)
+  totalRoyaltyEarned    Float    @default(0)
+  royaltyPaid           Float    @default(0)
+  royaltyPending        Float    @default(0)
+  lastRoyaltyPayoutDate DateTime?
+  printPartner          String?
+  availableOn           String   @default("[]")
+  tickets               Ticket[]
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([authorId])
+}
+
+model Ticket {
+  id           String         @id @default(cuid())
+  reference    String         @unique
+  authorId     String
+  author       User           @relation("TicketAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  bookId       String?
+  book         Book?          @relation(fields: [bookId], references: [id], onDelete: SetNull)
+  subject      String
+  description  String
+  category     TicketCategory
+  aiCategory   TicketCategory
+  priority     TicketPriority
+  aiPriority   TicketPriority
+  aiConfidence Float?
+  status       TicketStatus   @default(OPEN)
+  assignedToId String?
+  assignedTo   User?          @relation("TicketAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  messages     Message[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  resolvedAt   DateTime?
+
+  @@index([authorId])
+  @@index([status, priority, createdAt])
+  @@index([category])
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  ticketId   String
+  ticket     Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  senderId   String
+  sender     User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  body       String
+  isInternal Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([ticketId, createdAt])
+}

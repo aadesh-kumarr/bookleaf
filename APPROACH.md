@@ -1,0 +1,13 @@
+# Approach and trade-offs
+
+I prioritised the complete support loop: an author can sign in, understand their book and royalty data, raise a ticket, and see replies; an operator can triage, override AI decisions, assign work, write private notes, draft a grounded response, and send it. The interface deliberately mirrors BookLeaf’s public visual language—coral calls-to-action, white space, pale blush surfaces, rounded shapes, and warm charcoal text—without copying the marketing site’s layout.
+
+The highest-weighted evaluation area is AI integration, so it is treated as a bounded service rather than a decorative button. Classification has a strict output schema. Drafting receives the selected policy section and relevant book facts, not the full knowledge base or every historical message. This reduces cost, latency, and accidental context leakage. The API key never reaches the browser. If the model is unavailable, ticket creation still succeeds with deterministic classification and the admin still receives a usable policy template. Human review is mandatory before sending.
+
+SQLite makes the evaluator’s first run predictable and keeps setup to one command. Prisma provides a clear normalized schema and an easy path to PostgreSQL, which I would use for a real deployment. A ticket stores both AI suggestions and current values, so operator overrides remain visible and auditable. Public responses and internal notes share a message model but are filtered at the API boundary, preventing author access to private notes.
+
+For near-real-time behavior I chose five-second polling. It is easy to inspect, resilient during reconnects, and sufficient for support conversations; at scale I would use database events plus SSE or WebSockets behind a pub/sub service. Attachment handling remains a visible UI affordance because actual upload was explicitly optional. A production version would add signed object-storage uploads, validation, malware scanning, and lifecycle retention.
+
+The UI uses a shadcn-style component system so brand decisions are reusable instead of scattered through page-level controls. `src/config/app.ts` centralizes non-secret product, theme, feature, polling, auth, and AI settings. Environment variables remain the only home for secrets.
+
+Given more time I would add Playwright role/ownership tests, API integration tests, model-quality eval fixtures based on the provided examples, SLA and escalation automation, email notifications, append-only audit events, PostgreSQL migrations, background jobs, rate limiting, observability, and accessibility testing with real assistive technology.
