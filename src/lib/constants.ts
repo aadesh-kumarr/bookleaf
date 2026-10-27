@@ -42,6 +42,7 @@ export function formatDate(value: string | Date | null | undefined) {
     day: "numeric",
     month: "short",
     year: "numeric",
+    timeZone: "Asia/Kolkata",
   }).format(new Date(value));
 }
 
@@ -51,5 +52,6 @@ export function formatTime(value: string | Date | null | undefined) {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
+    timeZone: "Asia/Kolkata",
   }).format(new Date(value));
 }

@@ -7,6 +7,15 @@ const data = JSON.parse(
   await readFile(new URL("./bookleaf_sample_data.json", import.meta.url), "utf8"),
 );
 
+if (
+  process.env.NODE_ENV === "production" &&
+  process.env.ALLOW_DEMO_SEED !== "true"
+) {
+  throw new Error(
+    "Refusing to replace production data without ALLOW_DEMO_SEED=true.",
+  );
+}
+
 const samples = [
   {
     authorCode: "AUTH001",

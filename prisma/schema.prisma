@@ -35,23 +35,30 @@ enum TicketPriority {
   LOW
 }
 
+enum AiConfigPurpose {
+  CLASSIFICATION
+  RESPONSE_DRAFT
+}
+
 model User {
-  id              String    @id @default(cuid())
-  authorCode      String?   @unique
+  id              String       @id @default(cuid())
+  authorCode      String?      @unique
   name            String
-  email           String    @unique
+  email           String       @unique
   passwordHash    String
-  role            Role      @default(AUTHOR)
+  role            Role         @default(AUTHOR)
   phone           String?
   city            String?
   joinedDate      DateTime?
   books           Book[]
-  tickets         Ticket[]  @relation("TicketAuthor")
-  assignedTickets Ticket[]  @relation("TicketAssignee")
+  tickets         Ticket[]     @relation("TicketAuthor")
+  assignedTickets Ticket[]     @relation("TicketAssignee")
   messages        Message[]
   loginAudits     LoginAudit[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([role, name])
 }
 
 model LoginAudit {
@@ -66,32 +73,32 @@ model LoginAudit {
 
   @@index([attemptedEmail])
   @@index([success, createdAt])
-  @@index([userId])
+  @@index([userId, createdAt])
 }
 
 model Book {
-  id                    String   @id
+  id                    String    @id
   authorId              String
-  author                User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author                User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   title                 String
-  isbn                  String   @unique
+  isbn                  String    @unique
   genre                 String
   publicationDate       DateTime?
   status                String
   mrp                   Float?
   authorRoyaltyPerCopy  Float?
-  totalCopiesSold       Int      @default(0)
-  totalRoyaltyEarned    Float    @default(0)
-  royaltyPaid           Float    @default(0)
-  royaltyPending        Float    @default(0)
+  totalCopiesSold       Int       @default(0)
+  totalRoyaltyEarned    Float     @default(0)
+  royaltyPaid           Float     @default(0)
+  royaltyPending        Float     @default(0)
   lastRoyaltyPayoutDate DateTime?
   printPartner          String?
-  availableOn           String   @default("[]")
+  availableOn           String    @default("[]")
   tickets               Ticket[]
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
-  @@index([authorId])
+  @@index([authorId, title])
 }
 
 model Ticket {
@@ -116,20 +123,38 @@ model Ticket {
   updatedAt    DateTime       @updatedAt
   resolvedAt   DateTime?
 
-  @@index([authorId])
+  @@index([authorId, updatedAt])
   @@index([status, priority, createdAt])
-  @@index([category])
+  @@index([priority, status, createdAt])
+  @@index([category, priority, createdAt])
+  @@index([assignedToId, status])
+  @@index([createdAt])
 }
 
 model Message {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   ticketId   String
-  ticket     Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  ticket     Ticket    @relation(fields: [ticketId], references: [id], onDelete: Cascade)
   senderId   String
-  sender     User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  sender     User      @relation(fields: [senderId], references: [id], onDelete: Cascade)
   body       String
-  isInternal Boolean  @default(false)
-  createdAt  DateTime @default(now())
+  isInternal Boolean   @default(false)
+  readAt     DateTime?
+  createdAt  DateTime  @default(now())
 
   @@index([ticketId, createdAt])
+  @@index([ticketId, readAt, createdAt])
+}
+
+model AiConfiguration {
+  id              String          @id @default(cuid())
+  purpose         AiConfigPurpose @unique
+  model           String
+  systemPrompt    String
+  maxOutputTokens Int
+  enabled         Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([enabled, purpose])
 }

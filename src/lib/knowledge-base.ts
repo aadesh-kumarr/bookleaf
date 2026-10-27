@@ -11,6 +11,7 @@ const sections: Record<TicketCategory, string> = {
   GENERAL_INQUIRY: `BookLeaf handles cover design, typesetting, ISBN assignment, printing, distribution, and royalties. Metadata updates for live books can be submitted through the dashboard or support and usually reflect on platforms within 3–5 business days.`,
 };
 
+/** Returns the smallest policy section relevant to the selected ticket category. */
 export function getKnowledge(category: TicketCategory) {
   return `${common}\n\n${sections[category]}`;
 }

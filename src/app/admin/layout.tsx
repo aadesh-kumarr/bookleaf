@@ -1,4 +1,13 @@
-import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth";
-import { PortalShell } from "@/components/portal-shell";
-export default async function AdminLayout({ children }: { children: React.ReactNode }) { const user = await getCurrentUser(); if (!user) redirect("/login"); if (user.role !== "ADMIN") redirect("/author"); return <PortalShell user={user}>{children}</PortalShell>; }
+import { AuthenticatedPortal } from "@/components/layout/authenticated-portal";
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <AuthenticatedPortal requiredRole="ADMIN">
+      {children}
+    </AuthenticatedPortal>
+  );
+}

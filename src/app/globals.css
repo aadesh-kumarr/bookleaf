@@ -1,15 +1,171 @@
 @import "tailwindcss";
 
-:root { --coral:#f15d6f; --coral-dark:#d9465a; --blush:#fff0ed; --peach:#ffe1da; --ink:#252429; --muted:#746f75; --line:#eadfdf; --paper:#fffdfc; }
-* { box-sizing: border-box; }
-html { background: var(--paper); }
-body { margin:0; background:var(--paper); color:var(--ink); font-family:"Avenir Next",Avenir,"Segoe UI",Arial,sans-serif; }
-button,input,textarea,select { font:inherit; }
-button,a { -webkit-tap-highlight-color:transparent; }
-button { cursor:pointer; }
-::selection { background:#ffd2d8; color:#842f3b; }
-.page-enter { animation:page-enter .45s ease both; }
-@keyframes page-enter { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
-.soft-grid { background-image:radial-gradient(circle at 1px 1px,rgba(241,93,111,.14) 1px,transparent 0); background-size:24px 24px; }
-.scrollbar-thin { scrollbar-width:thin; scrollbar-color:#e6c8cc transparent; }
-@media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; scroll-behavior:auto!important; } }
+@theme {
+  /* Brand */
+  --color-brand: #f15d6f;
+  --color-brand-hover: #d9465a;
+  --color-brand-strong: #e04d61;
+  --color-brand-active: #e24f63;
+  --color-brand-deep: #b8384b;
+  --color-brand-ink: #c94356;
+  --color-brand-copy: #8d3c49;
+  --color-brand-icon: #e65265;
+  --color-brand-light: #ff9aa6;
+  --color-brand-glow: #ffbfc7;
+
+  /* Text */
+  --color-ink: #252429;
+  --color-text-strong: #39353a;
+  --color-text-body: #655f64;
+  --color-text-muted: #746f75;
+  --color-text-subtle: #817b80;
+  --color-text-caption: #8a8388;
+  --color-text-placeholder: #9b9297;
+  --color-text-disabled: #aaa1a5;
+  --color-on-brand: #ffffff;
+
+  /* Surfaces */
+  --color-page: #fffaf8;
+  --color-canvas: #fffdfc;
+  --color-surface: #ffffff;
+  --color-surface-soft: #fff9f7;
+  --color-surface-warm: #fff7f5;
+  --color-surface-subtle: #fffafa;
+  --color-surface-disabled: #faf8f8;
+  --color-brand-soft: #fff0ed;
+  --color-brand-wash: #fff3f1;
+  --color-brand-soft-hover: #ffe1da;
+  --color-neutral-soft: #f7f2f2;
+  --color-skeleton: #f1e5e6;
+  --color-progress-track: #f3e9ea;
+
+  /* Borders */
+  --color-border: #eadfdf;
+  --color-border-soft: #eee5e5;
+  --color-border-input: #dfd3d4;
+  --color-border-muted: #e8dfe0;
+  --color-border-dashed: #e5cccc;
+  --color-border-brand: #f2a7b0;
+  --color-border-brand-soft: #f0dadd;
+  --color-border-timeline: #eadbdd;
+  --color-scrollbar: #e8c7cc;
+
+  /* Feedback and data visualization */
+  --color-danger: #b91c1c;
+  --color-danger-strong: #dc2626;
+  --color-danger-soft: #fef2f2;
+  --color-danger-muted: #fee2e2;
+  --color-warning: #c2410c;
+  --color-warning-strong: #f97316;
+  --color-warning-soft: #ffedd5;
+  --color-caution: #b45309;
+  --color-caution-strong: #eab308;
+  --color-caution-soft: #fef3c7;
+  --color-note: #f59e0b;
+  --color-note-soft: #fffbeb;
+  --color-note-border: #fde68a;
+  --color-info: #1d4ed8;
+  --color-info-soft: #dbeafe;
+  --color-success: #047857;
+  --color-success-strong: #10b981;
+  --color-success-soft: #d1fae5;
+  --color-success-border: #a7f3d0;
+  --color-neutral-status: #475569;
+  --color-neutral-status-strong: #64748b;
+  --color-neutral-status-soft: #f1f5f9;
+  --color-neutral-status-muted: #e2e8f0;
+  --color-chart-low: #94a3b8;
+  --color-chart-violet: #8b5cf6;
+  --color-chart-sky: #0ea5e9;
+
+  /* Selection and effects */
+  --color-selection: #ffd2d8;
+  --color-selection-ink: #842f3b;
+  --color-transparent: transparent;
+
+  --shadow-field: 0 1px 2px rgb(63 32 38 / 4%);
+  --shadow-control: 0 1px 3px rgb(63 32 38 / 10%);
+  --shadow-card-sm: 0 12px 40px rgb(63 32 38 / 4%);
+  --shadow-card: 0 12px 40px rgb(63 32 38 / 5%);
+  --shadow-floating: 0 14px 40px rgb(63 32 38 / 12%);
+  --shadow-toast: 0 14px 40px rgb(63 32 38 / 14%);
+  --shadow-brand: 0 10px 24px rgb(241 93 111 / 22%);
+  --shadow-brand-strong: 0 8px 24px rgb(241 93 111 / 28%);
+  --shadow-book: 0 4px 6px rgb(63 32 38 / 12%);
+  --shadow-inset: inset 0 2px 4px rgb(63 32 38 / 6%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-canvas);
+}
+
+body {
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: "Avenir Next", Avenir, "Segoe UI", Arial, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--color-selection);
+  color: var(--color-selection-ink);
+}
+
+.page-enter {
+  animation: page-enter 0.45s ease both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.soft-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in srgb, var(--color-brand) 14%, var(--color-transparent)) 1px,
+    var(--color-transparent) 0
+  );
+  background-size: 24px 24px;
+}
+
+.ticket-scrollbar {
+  scrollbar-color: var(--color-scrollbar) var(--color-transparent);
+  scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,2 +1,19 @@
-import { AdminQueue } from "@/components/admin-queue";
-export default async function AdminPage({searchParams}:{searchParams:Promise<{status?:string;priority?:string}>}){const filters=await searchParams;const key=`${filters.status??""}-${filters.priority??""}`;return <AdminQueue key={key} initialStatus={filters.status} initialPriority={filters.priority}/>;}
+import { AdminDashboard } from "@/features/admin/components/dashboard";
+import { getAdminTickets } from "@/lib/admin-tickets";
+import { db } from "@/lib/db";
+export default async function AdminPage() {
+  const [tickets, userCount, bookCount, clock] = await Promise.all([
+    getAdminTickets(),
+    db.user.count(),
+    db.book.count(),
+    db.$queryRaw<Array<{ now: Date }>>`SELECT NOW() AS now`,
+  ]);
+  return (
+    <AdminDashboard
+      tickets={tickets}
+      userCount={userCount}
+      bookCount={bookCount}
+      generatedAt={clock[0].now.getTime()}
+    />
+  );
+}
