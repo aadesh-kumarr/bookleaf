@@ -68,9 +68,9 @@ environment variables:
 | `AI_USAGE_LOGGING` | No | Defaults to `true`; logs aggregate input and prompt-cache token counts without prompt content |
 
 Production session cookies automatically use the `Secure` flag and the
-`__Host-` prefix. Configure Vercel Firewall rules with the IDs `auth-login`,
-`ai-draft`, and `ticket-create`; the guarded handlers fail closed when a
-production rule is missing or unavailable.
+`__Host-` prefix. Login, AI drafting, and ticket creation use shared Redis
+fixed-window limits; guarded production handlers fail closed if Redis is
+unavailable.
 
 Without `OPENAI_API_KEY`, the app remains fully usable. Deterministic rules classify tickets and a policy-grounded template provides the admin draft.
 

@@ -14,9 +14,6 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.5.0
         version: 1.5.0(@types/react@19.3.0)(react@19.3.0)
-      '@vercel/firewall':
-        specifier: ^1.2.6
-        version: 1.2.6
       '@vercel/functions':
         specifier: ^3.10.3
         version: 3.10.3(ws@8.22.0)
@@ -1567,10 +1564,6 @@ packages:
     resolution: {integrity: sha512-uwyPIa5l8bRJdqWuppfrNRiq0Bhd9R//6hm8cfziAoqKqDCNfrzJfg/ztFVhMGPfqw9fI7W7VHfumLB7M7M2Fw==}
     peerDependencies:
       '@vercel/build-utils': 15.0.1
-
-  '@vercel/firewall@1.2.6':
-    resolution: {integrity: sha512-89ybsa2rnVNdw6RI3jGOVvqUJaBj6Umm4IagC1o3PKtr/MXxBKOLek+yyUgF0csA0O5W+dzcpdIhKxVXhgVVtA==}
-    engines: {node: '>= 20'}
 
   '@vercel/fun@1.3.6':
     resolution: {integrity: sha512-c05ioJxn3ShXAPoQAX7UbLVaKw7HSMDfJt2yljfCsDqGHN+Iw6mK4AMor4vcA+zsGFPngmJO0kVWP4zF2Q9rTQ==}
@@ -5002,8 +4995,6 @@ snapshots:
       - encoding
       - rollup
       - supports-color
-
-  '@vercel/firewall@1.2.6': {}
 
   '@vercel/fun@1.3.6(supports-color@7.2.0)':
     dependencies:
