@@ -11,6 +11,7 @@ const statusVariants: Record<string, BadgeVariant> = {
   CLOSED: "closed",
 };
 
+/** Maps persisted ticket values to their semantic badge treatment and label. */
 export function StatusBadge({
   value,
   className,

@@ -23,6 +23,7 @@ const badgeVariants = cva(
 export type BadgeVariant = NonNullable<
   VariantProps<typeof badgeVariants>["variant"]
 >;
+/** Renders compact semantic labels for statuses and data classifications. */
 export function Badge({
   className,
   variant,

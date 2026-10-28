@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/constants";
 
+/** Loads the administrator's searchable author and staff directory. */
 export default async function UsersPage() {
   const users = await db.user.findMany({
     include: {

@@ -75,6 +75,7 @@ function subscribeToRealtime(listener: Listener) {
   };
 }
 
+/** Subscribes a component to the tab's shared reconnecting ticket event socket. */
 export function useRealtimeEvents(handler: (event: RealtimeEvent) => void) {
   const handlerRef = useRef(handler);
 

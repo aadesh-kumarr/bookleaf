@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency, formatDate, formatTime } from "@/lib/constants";
 import type { AdminTicket } from "@/features/admin/types";
 
+/** Presents the original query and chronological public/internal timeline. */
 export function AdminTicketConversation({ ticket }: { ticket: AdminTicket }) {
   return (
     <>

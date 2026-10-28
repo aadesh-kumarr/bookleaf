@@ -24,6 +24,7 @@ type AuthorTicketDetail = {
     sender: { name: string; role: string };
   }[];
 };
+/** Renders an author-visible conversation and submits follow-up replies. */
 export function TicketDetail({
   id,
   initialTicket,

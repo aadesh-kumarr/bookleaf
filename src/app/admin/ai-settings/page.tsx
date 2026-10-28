@@ -1,6 +1,7 @@
 import { AiSettingsForm } from "@/features/admin/components/ai-settings-form";
 import { getAllAiConfigurations } from "@/lib/ai-config";
 
+/** Loads effective AI configurations for administrator review and editing. */
 export default async function AiSettingsPage() {
   const configurations = await getAllAiConfigurations();
 

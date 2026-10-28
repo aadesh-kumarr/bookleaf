@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 
+/** Hosts editable AI-assisted drafting without sending responses automatically. */
 export function AdminResponseWorkspace({
   draft,
   busy,

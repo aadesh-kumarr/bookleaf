@@ -18,6 +18,7 @@ const configurationSchema = z.object({
   enabled: z.boolean(),
 });
 
+/** Lists effective AI settings for the administration screen. */
 export async function GET(request: NextRequest) {
   const authorization = await authorizeRequest(request, "ADMIN");
   if (!authorization.ok) return authorization.response;
@@ -25,6 +26,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ configurations: await getAllAiConfigurations() });
 }
 
+/** Persists an AI override in PostgreSQL and refreshes its Redis cache entry. */
 export async function PUT(request: NextRequest) {
   const authorization = await authorizeRequest(request, "ADMIN");
   if (!authorization.ok) return authorization.response;
@@ -47,6 +49,7 @@ export async function PUT(request: NextRequest) {
   return NextResponse.json({ configuration });
 }
 
+/** Removes an AI override and restores the environment-backed default. */
 export async function DELETE(request: NextRequest) {
   const authorization = await authorizeRequest(request, "ADMIN");
   if (!authorization.ok) return authorization.response;

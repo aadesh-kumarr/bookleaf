@@ -4,6 +4,7 @@ import { AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
+/** Provides a consistent recoverable error state for protected portal pages. */
 export function PortalErrorState({ reset }: { reset: () => void }) {
   return (
     <Card className="mx-auto mt-12 max-w-xl">

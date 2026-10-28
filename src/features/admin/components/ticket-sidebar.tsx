@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { categories, labels, priorities, statuses } from "@/lib/constants";
 import type { AdminTicket } from "@/features/admin/types";
 
+/** Groups administrator triage controls, private notes, and author context. */
 export function AdminTicketSidebar({
   ticket,
   internalNote,

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+/** Renders the shared multiline input used by ticket and AI workflows. */
 export function Textarea({
   className,
   ...props

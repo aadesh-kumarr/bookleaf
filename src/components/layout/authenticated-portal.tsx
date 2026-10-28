@@ -6,6 +6,7 @@ import { PortalShell } from "@/components/layout/portal-shell";
 import { getCurrentUser } from "@/lib/auth";
 import { getUnreadMessageCount } from "@/lib/notifications";
 
+/** Enforces portal role access and supplies shared unread state to the shell. */
 export async function AuthenticatedPortal({
   requiredRole,
   children,

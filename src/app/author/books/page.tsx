@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatDate } from "@/lib/constants";
 
+/** Loads the signed-in author's private catalog and royalty facts. */
 export default async function BooksPage() {
   const user = await getCurrentUser();
   if (!user) return null;

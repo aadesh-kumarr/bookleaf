@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getErrorMessage, requestJson } from "@/lib/api-client";
 
+/** Handles credential submission and role-aware post-login navigation. */
 export function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");

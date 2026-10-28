@@ -1,5 +1,6 @@
 import { AuthenticatedPortal } from "@/components/layout/authenticated-portal";
 
+/** Wraps every administration route in the shared ADMIN authorization boundary. */
 export default function AdminLayout({
   children,
 }: {

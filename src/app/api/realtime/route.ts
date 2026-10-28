@@ -9,6 +9,7 @@ import {
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
+/** Upgrades an authenticated request to the Vercel realtime WebSocket channel. */
 export async function GET(request: NextRequest) {
   if (process.env.NODE_ENV === "production" && !process.env.REDIS_URL) {
     return Response.json(

@@ -9,6 +9,7 @@ import { getErrorMessage, requestJson } from "@/lib/api-client";
 
 type Book = { id: string; title: string; status: string };
 
+/** Collects and submits a validated author support request. */
 export function NewTicketForm({ books }: { books: Book[] }) {
   const router = useRouter();
   const [bookId, setBookId] = useState("");

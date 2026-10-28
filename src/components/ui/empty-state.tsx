@@ -1,3 +1,4 @@
+/** Presents a consistent empty result with optional recovery guidance. */
 export function EmptyState({
   title,
   text,

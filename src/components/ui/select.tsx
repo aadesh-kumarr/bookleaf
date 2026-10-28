@@ -2,6 +2,7 @@ import * as React from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/** Renders a consistently styled native select with an accessible indicator. */
 export function Select({
   className,
   children,

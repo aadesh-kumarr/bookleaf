@@ -1,5 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+/** Mirrors ticket rows to reduce layout shift during queue refreshes. */
 export function TicketRowsSkeleton({ rows = 4 }: { rows?: number }) {
   return (
     <div role="status" aria-label="Loading tickets" className="space-y-3">
@@ -19,6 +20,7 @@ export function TicketRowsSkeleton({ rows = 4 }: { rows?: number }) {
   );
 }
 
+/** Provides the shared route-level loading state for protected portals. */
 export function PortalPageSkeleton() {
   return (
     <div role="status" aria-label="Loading page">

@@ -1,3 +1,4 @@
+/** Enumerates the AI workflows that administrators may configure. */
 export const aiConfigPurposes = ["CLASSIFICATION", "RESPONSE_DRAFT"] as const;
 export type AiConfigPurpose = (typeof aiConfigPurposes)[number];
 

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description: appConfig.product.description,
 };
 
+/** Establishes global metadata, semantic styling, and toast infrastructure. */
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {

@@ -70,14 +70,14 @@ export const defaultAiConfigurations: Record<
 > = {
   CLASSIFICATION: {
     purpose: "CLASSIFICATION",
-    model: serverConfig.ai.classificationModel,
+    model: "gpt-5.4-nano",
     systemPrompt: defaultPrompts.classification,
     maxOutputTokens: serverConfig.ai.classificationMaxTokens,
     enabled: true,
   },
   RESPONSE_DRAFT: {
     purpose: "RESPONSE_DRAFT",
-    model: serverConfig.ai.responseModel,
+    model: "gpt-5.4-mini",
     systemPrompt: defaultPrompts.responseDraft,
     maxOutputTokens: serverConfig.ai.responseMaxTokens,
     enabled: true,

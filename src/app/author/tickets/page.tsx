@@ -1,6 +1,7 @@
 import { AuthorTickets } from "@/features/author/components/tickets-list";
 import { getCurrentUser } from "@/lib/auth";
 import { getTicketsForUser } from "@/lib/tickets";
+/** Loads the initial role-scoped ticket list for realtime client refreshes. */
 export default async function TicketsPage() {
   const user = await getCurrentUser();
   if (!user) return null;

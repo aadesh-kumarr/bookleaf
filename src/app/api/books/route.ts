@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authorizeRequest } from "@/lib/authorization";
 import { db } from "@/lib/db";
+/** Lists books within the authenticated user's role and ownership scope. */
 export async function GET(request: NextRequest) {
   const authorization = await authorizeRequest(request);
   if (!authorization.ok) return authorization.response;

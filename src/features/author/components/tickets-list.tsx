@@ -24,6 +24,7 @@ type AuthorTicket = {
     sender: { role: string };
   }[];
 };
+/** Displays searchable author tickets and refreshes them after realtime events. */
 export function AuthorTickets({
   initialTickets,
 }: {

@@ -23,6 +23,7 @@ const copy: Record<AiConfigPurpose, { title: string; description: string }> = {
   },
 };
 
+/** Lets administrators review, override, and restore AI workflow settings. */
 export function AiSettingsForm({
   initialConfigurations,
 }: {

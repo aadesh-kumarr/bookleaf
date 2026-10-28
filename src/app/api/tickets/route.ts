@@ -17,6 +17,7 @@ function reference() {
   return `BL-${Date.now().toString(36).toUpperCase().slice(-6)}`;
 }
 
+/** Lists tickets visible to the authenticated author or administrator. */
 export async function GET(request: NextRequest) {
   const authorization = await authorizeRequest(request);
   if (!authorization.ok) return authorization.response;
@@ -25,6 +26,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ tickets });
 }
 
+/** Validates, classifies, persists, and broadcasts a newly created author ticket. */
 export async function POST(request: NextRequest) {
   const authorization = await authorizeRequest(request, "AUTHOR");
   if (!authorization.ok) return authorization.response;

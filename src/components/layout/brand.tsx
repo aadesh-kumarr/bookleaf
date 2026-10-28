@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+/** Renders the reusable BookLeaf Author Care identity and home link. */
 export function Brand() {
   return (
     <Link

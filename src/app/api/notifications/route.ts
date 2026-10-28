@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authorizeRequest } from "@/lib/authorization";
 import { getUnreadMessageCount } from "@/lib/notifications";
 
+/** Returns the caller's role-scoped unread public-message count. */
 export async function GET(request: NextRequest) {
   const authorization = await authorizeRequest(request);
   if (!authorization.ok) return authorization.response;

@@ -11,8 +11,10 @@ import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { getErrorMessage, requestJson } from "@/lib/api-client";
 import { formatDate } from "@/lib/constants";
+import { useRealtimeEvents } from "@/hooks/use-realtime-events";
 import type { AdminTicket } from "@/features/admin/types";
 
+/** Coordinates assignment, triage, notes, AI drafting, and public responses. */
 export function AdminTicketDetail({
   id,
   initialTicket,
@@ -38,6 +40,18 @@ export function AdminTicketDetail({
     );
     setTicket(result.ticket);
   }
+
+  useRealtimeEvents((event) => {
+    if (
+      event.type === "realtime.connected" ||
+      (event.type === "ticket.updated" && event.ticketId === id)
+    ) {
+      void Promise.all([
+        load(),
+        fetch(`/api/tickets/${id}/read`, { method: "POST" }),
+      ]).catch(() => undefined);
+    }
+  });
 
   const canAct = Boolean(
     ticket?.assignedTo?.id && ticket.assignedTo.id === currentUserId,

@@ -14,6 +14,7 @@ import { StatusBadge as TicketBadge } from "@/components/ui/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatDate } from "@/lib/constants";
 
+/** Loads the signed-in author's book, royalty, and ticket overview. */
 export default async function AuthorDashboard() {
   const user = await getCurrentUser();
   if (!user) return null;

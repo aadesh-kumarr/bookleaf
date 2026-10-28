@@ -174,9 +174,23 @@ export function ticketUpdatedEvent(ticketId: string, authorId: string) {
 }
 
 /** Notifies one user that their unread-message count should be refetched. */
-export function notificationsUpdatedEvent(userId: string) {
+export function notificationsUpdatedEvent(user: UserIdentity) {
   return publishRealtimeEvent({
-    audience: { userIds: [userId] },
+    audience:
+      user.role === "ADMIN"
+        ? { roles: ["ADMIN"] }
+        : { userIds: [user.id] },
     event: { type: "notifications.updated" },
+  });
+}
+
+/** Refreshes unread ticket rows for the user or administrator team that read them. */
+export function ticketReadEvent(ticketId: string, user: UserIdentity) {
+  return publishRealtimeEvent({
+    audience:
+      user.role === "ADMIN"
+        ? { roles: ["ADMIN"] }
+        : { userIds: [user.id] },
+    event: { type: "ticket.updated", ticketId },
   });
 }

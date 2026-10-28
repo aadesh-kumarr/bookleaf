@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+/** Renders the shared styled native input while preserving standard props. */
 export function Input({
   className,
   type,

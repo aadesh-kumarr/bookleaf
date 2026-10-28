@@ -122,6 +122,7 @@ function NavigationLink({
   );
 }
 
+/** Renders role-aware navigation and keeps its unread badge synchronized. */
 export function PortalShell({
   user,
   initialUnreadCount,

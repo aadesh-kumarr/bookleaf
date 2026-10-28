@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authorizeRequest } from "@/lib/authorization";
 import { getAdminTickets } from "@/lib/admin-tickets";
+/** Returns the filtered ticket queue for authenticated administrators. */
 export async function GET(request: NextRequest) {
   const authorization = await authorizeRequest(request, "ADMIN");
   if (!authorization.ok) return authorization.response;

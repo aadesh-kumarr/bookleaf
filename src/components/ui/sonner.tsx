@@ -2,6 +2,7 @@
 
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 
+/** Applies the product theme to global toast notifications. */
 export function Toaster(props: ToasterProps) {
   return (
     <Sonner

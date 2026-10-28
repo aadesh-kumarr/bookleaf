@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency, formatDate, labels } from "@/lib/constants";
 
+/** Loads one author's books, tickets, contact details, and login audit history. */
 export default async function UserDetailPage({
   params,
 }: {

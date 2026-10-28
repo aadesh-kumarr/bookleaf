@@ -37,6 +37,7 @@ type Ticket = {
   _count: { messages: number };
 };
 const priorityRank = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3 };
+/** Provides filterable, realtime operations triage across all support tickets. */
 export function AdminQueue({
   initialTickets,
   initialStatus = "",

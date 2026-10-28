@@ -1,6 +1,7 @@
 import { AdminDashboard } from "@/features/admin/components/dashboard";
 import { getAdminTickets } from "@/lib/admin-tickets";
 import { db } from "@/lib/db";
+/** Loads the queue aggregates required by the administrator dashboard. */
 export default async function AdminPage() {
   const [tickets, userCount, bookCount, clock] = await Promise.all([
     getAdminTickets(),

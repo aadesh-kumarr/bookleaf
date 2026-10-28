@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { streamDraftResponse } from "@/lib/ai";
 import { enforceRateLimit } from "@/lib/rate-limit";
 const schema = z.object({ ticketId: z.string() });
+/** Streams an administrator-reviewed, policy-grounded response draft. */
 export async function POST(request: NextRequest) {
   const authorization = await authorizeRequest(request, "ADMIN");
   if (!authorization.ok) return authorization.response;

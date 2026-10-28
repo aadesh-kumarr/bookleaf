@@ -65,9 +65,7 @@ environment variables:
 | `AUTH_SECRET` | Yes | Long random value used to sign JWT sessions |
 | `REDIS_URL` | Yes | Redis connection used for WebSocket fan-out and the shared AI-configuration cache |
 | `OPENAI_API_KEY` | No | Enables LLM classification and response drafting |
-| `OPENAI_CLASSIFICATION_MODEL` | No | Defaults to `gpt-5.4-nano` for fast structured ticket triage |
-| `OPENAI_RESPONSE_MODEL` | No | Defaults to `gpt-5.4-mini` for policy-grounded support drafts |
-| `AI_USAGE_LOGGING` | No | Set to `true` to log aggregate input and prompt-cache token counts; no prompt content is logged |
+| `AI_USAGE_LOGGING` | No | Defaults to `true`; logs aggregate input and prompt-cache token counts without prompt content |
 
 Production session cookies automatically use the `Secure` flag and the
 `__Host-` prefix. Configure Vercel Firewall rules with the IDs `auth-login`,
@@ -119,6 +117,12 @@ AI configuration reads use Redis first and query PostgreSQL only on a cache
 miss. Admin updates commit to PostgreSQL before refreshing Redis, so PostgreSQL
 remains the source of truth. The TTL bounds stale data if an external/manual DB
 change bypasses the application update endpoint.
+
+Model selection is owned by the database-backed admin configuration, not by
+environment variables. Until an override is saved, the safe application
+defaults are `gpt-5.4-nano` for classification and `gpt-5.4-mini` for drafting.
+Aggregate prompt-cache usage logging is enabled by default and can be disabled
+with `AI_USAGE_LOGGING=false` when operational logs must be minimized.
 
 The admin must review and click Send; AI never sends a response autonomously. API errors, missing keys, or rate limits fall back cleanly and never block ticket creation.
 

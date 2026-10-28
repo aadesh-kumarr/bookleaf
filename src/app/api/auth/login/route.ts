@@ -11,6 +11,7 @@ const schema = z.object({
   email: z.email().transform((v) => v.toLowerCase()),
   password: z.string().min(6).max(100),
 });
+/** Authenticates credentials, audits the attempt, and creates a secure session. */
 export async function POST(request: Request) {
   const rateLimitResponse = await enforceRateLimit(request, "auth-login");
   if (rateLimitResponse) return rateLimitResponse;

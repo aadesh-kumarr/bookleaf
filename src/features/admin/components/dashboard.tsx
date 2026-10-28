@@ -94,6 +94,7 @@ function DonutChart({
   );
 }
 
+/** Summarizes queue workload, trends, and tickets requiring operator attention. */
 export function AdminDashboard({
   tickets,
   userCount,

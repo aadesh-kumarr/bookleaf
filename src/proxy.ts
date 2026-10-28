@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const sessionCookieNames = ["__Host-bookleaf_session", "bookleaf_session"];
 
+/** Rejects obviously unauthenticated portal requests before protected rendering. */
 export function proxy(request: NextRequest) {
   const hasSession = sessionCookieNames.some((name) =>
     request.cookies.has(name),

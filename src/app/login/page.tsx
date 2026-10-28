@@ -6,6 +6,7 @@ import {
 import { Brand } from "@/components/layout/brand";
 import { LoginForm } from "@/features/auth/components/login-form";
 
+/** Presents the public BookLeaf introduction alongside the interactive login form. */
 export default function LoginPage() {
   return (
     <main className="min-h-screen bg-page lg:grid lg:grid-cols-[1.05fr_.95fr]">

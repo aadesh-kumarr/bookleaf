@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { AdminTicketDetail } from "@/features/admin/components/ticket-detail";
 import { getCurrentUser } from "@/lib/auth";
 import { getTicketForUser } from "@/lib/tickets";
+/** Loads an administrator-visible ticket or returns the App Router 404 state. */
 export default async function AdminTicketPage({
   params,
 }: {

@@ -1,5 +1,6 @@
 import "server-only";
 
+/** Centralizes server-only authentication and AI runtime configuration. */
 export const serverConfig = {
   auth: {
     cookieName:
@@ -11,13 +12,10 @@ export const serverConfig = {
   },
   ai: {
     provider: "openai",
-    classificationModel:
-      process.env.OPENAI_CLASSIFICATION_MODEL || "gpt-5.4-nano",
-    responseModel: process.env.OPENAI_RESPONSE_MODEL || "gpt-5.4-mini",
     reasoningEffort: "none" as const,
     classificationMaxTokens: 120,
     responseMaxTokens: 200,
-    logUsage: process.env.AI_USAGE_LOGGING === "true",
+    logUsage: process.env.AI_USAGE_LOGGING !== "false",
     enabled: Boolean(process.env.OPENAI_API_KEY),
   },
 } as const;

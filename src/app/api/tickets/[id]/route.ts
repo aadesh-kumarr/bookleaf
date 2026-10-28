@@ -13,6 +13,7 @@ const updateSchema = z.object({
   status: z.enum(statuses).optional(),
   assignToMe: z.boolean().optional(),
 });
+/** Returns one authorized ticket with only messages visible to the caller. */
 export async function GET(
   request: NextRequest,
   context: { params: Promise<{ id: string }> },
@@ -26,6 +27,7 @@ export async function GET(
     ? NextResponse.json({ ticket })
     : apiError("Ticket not found.", 404);
 }
+/** Applies an assigned administrator's triage or lifecycle update. */
 export async function PATCH(
   request: NextRequest,
   context: { params: Promise<{ id: string }> },

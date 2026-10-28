@@ -27,6 +27,7 @@ const buttonVariants = cva(
   },
 );
 
+/** Renders the shared accessible button variants used across interactive flows. */
 export function Button({
   className,
   variant,

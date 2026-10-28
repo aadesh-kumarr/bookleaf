@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+/** Provides the shared bordered surface used to group related information. */
 export function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -12,6 +13,7 @@ export function Card({ className, ...props }: React.ComponentProps<"div">) {
     />
   );
 }
+/** Provides consistent spacing for a card's heading region. */
 export function CardHeader({
   className,
   ...props
@@ -24,6 +26,7 @@ export function CardHeader({
     />
   );
 }
+/** Applies the standard card heading hierarchy. */
 export function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
   return (
     <h3
@@ -33,6 +36,7 @@ export function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
     />
   );
 }
+/** Provides consistent spacing for a card's content region. */
 export function CardContent({
   className,
   ...props

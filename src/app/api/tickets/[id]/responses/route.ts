@@ -3,12 +3,18 @@ import { z } from "zod";
 import { apiError } from "@/lib/api";
 import { authorizeRequest } from "@/lib/authorization";
 import { db } from "@/lib/db";
-import { publishRealtimeEvent, ticketUpdatedEvent } from "@/lib/realtime";
+import { markTicketMessagesRead } from "@/lib/notifications";
+import {
+  notificationsUpdatedEvent,
+  publishRealtimeEvent,
+  ticketUpdatedEvent,
+} from "@/lib/realtime";
 
 const schema = z.object({
   body: z.string().trim().min(2).max(8000),
   isInternal: z.boolean().default(false),
 });
+/** Adds an authorized public response or administrator-only internal note. */
 export async function POST(
   request: NextRequest,
   context: { params: Promise<{ id: string }> },
@@ -31,24 +37,29 @@ export async function POST(
       409,
     );
   }
-  const message = await db.message.create({
-    data: {
-      ticketId: id,
-      senderId: user.id,
-      body: parsed.data.body,
-      isInternal: parsed.data.isInternal,
-      readAt: parsed.data.isInternal ? new Date() : null,
-    },
+  const { message, readCount } = await db.$transaction(async (transaction) => {
+    const readResult = await markTicketMessagesRead(id, user, transaction);
+    const createdMessage = await transaction.message.create({
+      data: {
+        ticketId: id,
+        senderId: user.id,
+        body: parsed.data.body,
+        isInternal: parsed.data.isInternal,
+        readAt: parsed.data.isInternal ? new Date() : null,
+      },
+    });
+    await transaction.ticket.update({
+      where: { id },
+      data: {
+        status:
+          user.role === "ADMIN" && !parsed.data.isInternal
+            ? "IN_PROGRESS"
+            : ticket.status,
+      },
+    });
+    return { message: createdMessage, readCount: readResult.count };
   });
-  await db.ticket.update({
-    where: { id },
-    data: {
-      status:
-        user.role === "ADMIN" && !parsed.data.isInternal
-          ? "IN_PROGRESS"
-          : ticket.status,
-    },
-  });
+  if (readCount > 0) await notificationsUpdatedEvent(user);
   if (parsed.data.isInternal) {
     await publishRealtimeEvent({
       audience: { roles: ["ADMIN"] },

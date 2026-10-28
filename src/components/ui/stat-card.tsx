@@ -1,3 +1,4 @@
+/** Displays one dashboard metric with a contextual icon and helper text. */
 export function StatCard({
   label,
   value,

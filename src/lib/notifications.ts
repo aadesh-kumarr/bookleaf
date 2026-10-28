@@ -1,7 +1,10 @@
 import "server-only";
 
+import type { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import type { UserIdentity } from "@/types/auth";
+
+type MessageStore = Pick<Prisma.TransactionClient, "message">;
 
 /** Counts unread public messages addressed to the current role or author. */
 export function getUnreadMessageCount(user: UserIdentity) {
@@ -19,8 +22,9 @@ export function getUnreadMessageCount(user: UserIdentity) {
 export function markTicketMessagesRead(
   ticketId: string,
   user: UserIdentity,
+  store: MessageStore = db,
 ) {
-  return db.message.updateMany({
+  return store.message.updateMany({
     where: {
       ticketId,
       readAt: null,

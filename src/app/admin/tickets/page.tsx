@@ -2,6 +2,7 @@ import { AdminQueue } from "@/features/admin/components/ticket-queue";
 import { getAdminTickets } from "@/lib/admin-tickets";
 import { serverConfig } from "@/config/server";
 
+/** Loads validated URL filters and the initial administrator ticket queue. */
 export default async function TicketQueuePage({
   searchParams,
 }: {

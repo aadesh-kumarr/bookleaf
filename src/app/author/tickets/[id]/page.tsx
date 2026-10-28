@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { TicketDetail } from "@/features/author/components/ticket-detail";
 import { getCurrentUser } from "@/lib/auth";
 import { getTicketForUser } from "@/lib/tickets";
+/** Loads one author-owned ticket or returns the App Router 404 state. */
 export default async function TicketPage({
   params,
 }: {
